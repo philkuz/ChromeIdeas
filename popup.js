@@ -1,31 +1,6 @@
-// adds a new idea to the list
-function addNewIdea(idea) {
-    console.log()
-    getIdeas(function(items) {
-
-        var ideas = items['ideas'];
-
-        ideas.push(idea);
-        chrome.storage.sync.set({'ideas': ideas}, function() {
-            console.log("Nice Idea!");
-        });
-    });
-}
-// removes the idea from the list
-function removeIdea(idea) {
-
-}
-// This event is fired with the user accepts the input in the omnibox.
-chrome.omnibox.onInputEntered.addListener(function(text) {
-    addNewIdea(text);
-    console.log('inputEntered: ' + text);
-    alert('You just typed "' + text + '"');
-});
-
 function getIdeas(callback) {
     chrome.storage.sync.get({ideas: []}, callback)
 }
-
 function displayIdeas(starting, numberOfIdeas) {
     getIdeas(function(items) {
         var ideas = items['ideas'];
@@ -49,5 +24,6 @@ function displayIdeas(starting, numberOfIdeas) {
         }
     })
 }
-
-// function onPopupLoad
+window.addEventListener('DOMContentLoaded', function() {
+    displayIdeas(0, 5);
+});
